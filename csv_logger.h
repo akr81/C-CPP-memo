@@ -23,10 +23,8 @@ class CsvLogger {
     std::stringstream ss;
 
     // avoid to regard short type as char
-    if (typeid(T) == typeid(unsigned char)) {
+    if ((typeid(T) == typeid(unsigned char)) || (typeid(T) == typeid(signed char))) {
       ss << static_cast<uint16_t>(item);
-    } else if (typeid(T) == typeid(signed char)) {
-      ss << static_cast<int16_t>(item);
     } else {
       ss << item;
     }
@@ -42,23 +40,13 @@ class CsvLogger {
 
     if (!file_exist) {
       // title output
-      for (size_t i = 0; i < title_line.size(); ++i) {
-        if (i == title_line.size() - 1) {
-          writing_file << title_line.at(i) << std::endl;
-        } else {
-          writing_file << title_line.at(i) << ",";
-        }
-      }
+      combineItems(title_line, line);
+      writing_file << line << std::endl;
     }
 
     // item output
-    for (size_t i = 0; i < data_line.size(); ++i) {
-      if (i == data_line.size() - 1) {
-        writing_file << data_line.at(i) << std::endl;
-      } else {
-        writing_file << data_line.at(i) << ",";
-      }
-    }
+    combineItems(data_line, line);
+    writing_file << line << std::endl;
 
     writing_file.close();
   }
@@ -66,10 +54,23 @@ class CsvLogger {
  private:
   std::vector<std::string> data_line;
   std::vector<std::string> title_line;
+  std::string line;
 
   bool checkFileExist(const std::string &outpath) {
     std::ifstream ifs(outpath);
     return ifs.is_open();
+  }
+
+  void combineItems(std::vector<std::string> lines, std::string &line) {
+    // initialize
+    line = "";
+    for (size_t i = 0; i < lines.size(); ++i) {
+      if (i == lines.size() - 1) {
+        line = line + lines.at(i);
+      } else {
+        line = line + lines.at(i) + ",";
+      }
+    }
   }
 };
 
