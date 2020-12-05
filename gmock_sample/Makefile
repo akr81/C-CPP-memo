@@ -1,7 +1,7 @@
 # コンパイラの指定
 CC := g++
 LDLIBS := -lgtest_main -lgtest -lgmock -lpthread
-SRC := main.cc namespace_method.cc
+SRC := main.cc namespace_method.cc namespace_interface.cc
 TESTSRC := ./test/namespace_gtest.cpp
 
 build:
