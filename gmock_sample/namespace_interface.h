@@ -9,6 +9,7 @@
 #define NAME_SPACE_INTERFACE_H_
 
 class NamespaceInterface {
+ public:
   bool namespace_sample01(uint8_t input);
 };
 
