@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-bool NamespaceInterface::namespace_sample01(uint8_t input) {
+bool UseNamespaceInterface::namespace_sample01(uint8_t input) {
   std::cout << "interface namespace_sample01 called." << std::endl;
   return NAMESPACE::namespace_sample01(input);
 }
